@@ -88,9 +88,9 @@ h1 {
 }
 
 .hero-text {
-  position: absolute;
+  position: relative;
   background-color: rgba(147, 146, 146, 0.55);
-  color: #fff;
+  color: #00b4d8;
   padding: 1em 1.5em;
   border-radius: 8px;
   width: 80%;
@@ -98,7 +98,7 @@ h1 {
 }
 
 .hero-text h2{
-  color: #00b4d8;
+  color: #02a6c6;
   font-size: 1.4rem;
   margin-bottom: 0.5em;
 }
@@ -112,7 +112,7 @@ h1 {
 .btn {
   display: inline-block;
   background-color: #00b4d8;
-  color: #fff;
+  color: #040404;
   padding: 0.5em 1em;
   border-radius: 5px;
   font-weight: bold;
