@@ -88,7 +88,7 @@ h1 {
 }
 
 .hero-text {
-  position: relative;
+  position: absolute;
   background-color: rgba(147, 146, 146, 0.55);
   color: #00b4d8;
   padding: 1em 1.5em;
@@ -106,7 +106,7 @@ h1 {
 .hero-text ul {
   list-style: none;
   margin: 0.5em 0;
-  color: #f0f0f0;
+  color: #00b4d8;
 }
 
 .btn {
