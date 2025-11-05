@@ -89,12 +89,15 @@ h1 {
 
 .hero-text {
   position: absolute;
-  background-color: rgba(147, 146, 146, 0.55);
+  top: 50%;
+  left: 15%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.55);
   color: #00b4d8;
   padding: 1em 1.5em;
   border-radius: 8px;
-  width: 80%;
-  max-width: 500px;
+  width: 40%;
+  max-width: 450px;
 }
 
 .hero-text h2{
