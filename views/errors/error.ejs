@@ -1,9 +1,7 @@
+<% if (title) { %>
 <h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
 
-<p class="funny-text">
-  Something went a little sideways...  
-  Our server is currently blaming the database.  
-  Meanwhile, here’s what it actually said:
-</p>
-
-<%- messages() %>
+<%- message %>
