@@ -12,7 +12,7 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
-const utilities = require("./utilities/index")
+const utilities = require("./utilities/")
 
 
 /* ***********************
@@ -28,7 +28,7 @@ app.set("layout", "./layouts/layout") // not at views root
 app.use(static)
 
 // Index route
-app.get("/", baseController.buildHome)
+app.get("/", utilities.handleErrors(baseController.buildHome))
 
 // Inventory routes
 app.use("/inv", inventoryRoute)
@@ -54,7 +54,7 @@ app.use(async (err, req, res, next) => {
   }
   res.render("errors/error", {
     title: err.status || 'Server Error',
-    message:
+    message,
     nav
   })
 })
