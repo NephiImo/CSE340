@@ -291,13 +291,13 @@ hr {
 
 #actionbtn {
   display: inline-block;
-  max-width: 22vw;
-  max-height: 8vh;
-  padding: .5rem;
+  padding: .5rem 1rem;
   background-color: var(--main-accent);
   color: var(--primary-text);
   font-weight: 800;
   border-radius: .25rem;
+  border: none;
+  cursor: pointer;
 }
 
 #actionbtn:hover {
