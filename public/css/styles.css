@@ -29,13 +29,18 @@ CSS Styles for CSE Motors
 @import url('https://fonts.googleapis.com/css2?family=Inter&family=Literata:opsz@7..72&display=swap');
 
 /******* 1.1 Change Box Model ***************/
+/*#region*/
 *,
 *:before,
 *:after {
   box-sizing: border-box;
 }
 
+/*#endregion*/
 /******* 1.2 Universal Styles ***************/
+/*#region*/
+
+/* Colors */
 :root {
   --primary-text: #242333;
   --primary-background: #fff;
@@ -52,7 +57,6 @@ CSS Styles for CSE Motors
 
 img {
   max-width: 100%;
-  display: block;
 }
 
 h1,
@@ -101,6 +105,7 @@ textarea {
 input,
 select {
   font-size: 1.25rem;
+
 }
 
 input[type='Submit'] {
@@ -109,9 +114,11 @@ input[type='Submit'] {
   margin: .5rem 0 1rem 0;
 }
 
+/*#endregion*/
 /************************************************
    1.3 Header
 ************************************************/
+/*#region*/
 #top-header {
   display: flex;
   justify-content: space-between;
@@ -128,6 +135,8 @@ input[type='Submit'] {
   display: flex;
   width: 20%;
   justify-content: space-evenly;
+  
+  
 }
 
 header>img {
@@ -145,30 +154,20 @@ header a {
   align-self: center;
 }
 
+/*#endregion*/
 /************************************************
    1.4 Navigation
 ************************************************/
+/*#region*/
 nav {
   background-color: var(--primary-text);
   color: var(--primary-background);
 }
 
-/* Mobile-first: hide the full nav by default (toggle available)
-   and show a simple toggle button. Desktop shows full nav. */
 nav ul {
-  display: none;
+  display: flex;
   padding: 0 1vw;
   justify-content: space-around;
-}
-
-.nav-toggle {
-  display: inline-block;
-  color: var(--primary-background);
-  background: transparent;
-  border: none;
-  padding: .5rem .75rem;
-  font-size: 1.1rem;
-  cursor: pointer;
 }
 
 nav li {
@@ -180,16 +179,18 @@ nav li {
 nav a {
   color: var(--primary-background);
   text-decoration: none;
-  font-size: .95rem;
+  font-size: .85rem;
   padding-top: 1em;
   padding-bottom: 1em;
-  display: inline-block;
 }
 
+/*#endregion*/
 /************************************************
    1.5 body
 ************************************************/
+/*#region*/
 body {
+  /* font-family: 'Share Tech Mono', sans-serif; */
   font-family: var(--body-font), sans-serif;
   margin: 0;
 }
@@ -214,9 +215,13 @@ body {
   font-size: x-large;
 }
 
+
+
+/*#endregion*/
 /************************************************
    1.6 Footer
 ************************************************/
+/*#region*/
 footer{
   margin-top: 2rem;
 }
@@ -232,21 +237,23 @@ hr {
   margin: 0;
 }
 
+/*#endregion*/
 /************************************************
    2. Component Styles
 ***********************************************/
+
 /************************************************
    2.1 Hero section - home view
 ************************************************/
+/*#region*/
 #hero {
   background-image: url("/images/vehicles/delorean.jpg");
   background-repeat: no-repeat;
-  background-size: cover; /* mobile: cover for better cropping */
+  background-size: contain;
   background-position: center;
   margin-left: auto;
   margin-right: auto;
   display: flex;
-  padding: 1rem 0;
 }
 
 #hero h2 {
@@ -260,6 +267,7 @@ hr {
 #hero li {
   list-style: none;
   color: var(--main-accent);
+
 }
 
 #hero li h2 {
@@ -271,54 +279,61 @@ hr {
 #hero ul {
   padding-left: 0;
   margin-top: 0;
-  max-width: 280px;
+  max-width: 200px;
   margin-left: .5em;
   margin-bottom: 2rem;
-  background-color: rgba(255, 255, 255, 0.85);
-  padding: .75rem;
-  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 #hero li {
-  font-size: .9em;
+  font-size: .85em;
 }
 
 #actionbtn {
   display: inline-block;
-  padding: .5rem 1rem;
+  max-width: 22vw;
+  max-height: 8vh;
+  padding: .5rem;
   background-color: var(--main-accent);
   color: var(--primary-text);
   font-weight: 800;
   border-radius: .25rem;
-  border: none;
-  cursor: pointer;
 }
 
 #actionbtn:hover {
-  opacity: .85;
+  opacity: .5;
 }
 
+/* For Delorian list */
 section ul {
   padding: 0 0 0 1rem;
 }
 
+/*#endregion*/
+
 /************************************************
    2.2 Review section - home view
 ************************************************/
+/*#region*/
 #review li {
   font-size: .9em;
   margin-bottom: 1em;
 }
 
+
+
+/*#endregion*/
 /************************************************
    2.3 Add-on section - home view
 ************************************************/
+/*#region*/
 .flex {
   display: flex;
   margin-bottom: 2em;
   justify-content: center;
   width: 100%;
   padding-left: .25em;
+
 }
 
 .flex a {
@@ -326,32 +341,14 @@ section ul {
 }
 
 .add-col {
-  width: 100%;
-  height: 10rem;            /* consistent card height on mobile */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;         /* keep images inside rounded corners */
   background-color: var(--main-accent);
-  border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 6px;
-  padding: 0.25rem;
-}
-
-.add-col img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+  height: 5.5em;
+  width:fit-content; 
+  border: var(--primary-text) solid 1px;
 }
 
 a figure {
   margin: 0;
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .5rem;
 }
 
 figure img {
@@ -364,14 +361,21 @@ figure figcaption {
   text-align: center;
 }
 
+
+
 section {
   margin-bottom: 2em;
   margin-top: 1em;
 }
 
+
+
+/*#endregion*/
+
 /************************************************
    2.4 Forms 
 ************************************************/
+/*#region*/
 label+div {
   font-size: .7rem;
   margin-left: .5rem;
@@ -411,7 +415,8 @@ input[name$='Thumbnail'] {
   border-radius: .5rem;
 }
 #loginContainer p{
-  text-align: center;
+text-align: center;
+  
 }
 #loginContainer a{
   font-weight: 700;
@@ -453,98 +458,37 @@ input[name$='Thumbnail'] {
 :is(fieldset) select{
   margin-bottom: .75rem;
 }
+/*#endregion*/
 
 /************************************************
    2.5 Vehicles grid - classification view
 ************************************************/
+/*#region*/
 #inv-display {
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 }
 
 #inv-display li {
   margin-bottom: .5em;
+  border: 1px #ccc solid;
   list-style-type: none;
+  flex: 1 1 auto;
   text-align: center;
 }
 
-/* Card pattern for consistent image+text+cta inside cards */
-#inv-display .card {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--main-accent);
-  color: var(--primary-text);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-  min-height: 320px;
+#inv-display li img {
+  object-fit: fill;
 }
 
-#inv-display .card-image {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: #ddd;
-}
-#inv-display .card-image img {
-  width: 100%;
-  height: 100%;
-  display: block;
-  object-fit: cover;
-  object-position: center;
-}
-
-#inv-display .card-body {
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1 1 auto;
-}
-
-.card-title {
-  font-size: 1.05rem;
-  margin: 0;
-  line-height: 1.2;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: var(--primary-text);
-}
-.card-price {
-  font-weight: 800;
-  margin: 0;
-  color: var(--primary-text);
-}
-.card-desc {
-  margin: 0;
-  color: rgba(0,0,0,0.7);
-  font-size: 0.95rem;
-  flex: 1 1 auto;
-  overflow: hidden;
-}
-
-.card-cta {
-  display: inline-block;
-  margin-top: auto;
-  text-align: center;
-  padding: 0.55rem 0.75rem;
-  border-radius: 6px;
-  background: #fff;
-  color: var(--primary-text);
-  font-weight: 700;
-  text-decoration: none;
-}
+/*#endregion*/
 
 /************************************************
    2.6 Vehicle  - detail view
 ************************************************/
+/*#region*/
 #detail {
   display: flex;
   align-items: start;
@@ -578,9 +522,12 @@ input[name$='Thumbnail'] {
   background-color: #f5f5f5;
 }
 
+/*#endregion*/
+
 /************************************************
    2.7 Misc 
 ************************************************/
+/*#region*/
 .boldList>li{
   font-size: larger;
   margin-bottom: .5rem;
@@ -592,14 +539,14 @@ input[name$='Thumbnail'] {
   font-size: large;
 }
 
-/************************************************
-   3. Media Query (desktop at 768px)
-************************************************/
+
+/*#endregion*/
 @media only screen and (min-width: 768px) {
 
   /*******************************************
      3.1 General
     *******************************************/
+  /*#region*/
   body {
     background-image:
       linear-gradient(45deg, #000 25%, transparent 25%),
@@ -617,7 +564,6 @@ input[name$='Thumbnail'] {
     padding: 1vw;
     width: 75vw;
     max-width: 1200px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
   }
 
   h1 {
@@ -626,9 +572,12 @@ input[name$='Thumbnail'] {
     grid-column: 1 / 3;
   }
 
+  /*#endregion*/
   /*******************************************
      3.2 Header
     *******************************************/
+  /*#region*/
+
   #tools {
     font-size: inherit;
   }
@@ -637,21 +586,20 @@ input[name$='Thumbnail'] {
     opacity: .5;
   }
 
+  /*#endregion*/
   /*******************************************
      3.3 Navigation
     ********************************************/
+  /*#region*/
   nav {
     margin-top: .75rem;
   }
 
   nav ul {
-    display: flex;
     justify-content: space-evenly;
     padding: .5rem 0;
     margin: 0;
   }
-
-  .nav-toggle { display: none; }
 
   nav li {
     margin: 0;
@@ -671,15 +619,15 @@ input[name$='Thumbnail'] {
     background-color: var(--primary-background);
   }
 
+  /*#endregion*/
   /*******************************************
      3.4 Hero - Home
     *******************************************/
+  /*#region*/
   #hero ul {
     font-size: 1.6em;
     margin-left: 2em;
     margin-top: 1em;
-    max-width: 360px;
-    padding: 1rem;
   }
 
   #actionbtn {
@@ -693,9 +641,11 @@ input[name$='Thumbnail'] {
     font-size: large;
   }
 
+  /*#endregion*/
   /*******************************************
      3.5 Review & Add-on - Home   
    *******************************************/
+  /*#region*/
   .flex-content {
     display: flex;
     justify-content: space-between;
@@ -714,21 +664,31 @@ input[name$='Thumbnail'] {
     margin-bottom: 2em;
   }
 
-  #add-ons { order: -1; }
+  #add-ons {
+    order: -1;
+  }
 
-  #review li { font-size: 1.1em; }
+  #review li {
+    font-size: 1.1em;
+  }
 
-  #add-ons { width: 45%; }
+  #add-ons {
+    width: 45%;
+  }
 
+  /*#endregion*/
   /*******************************************
      3.6 Vehicles grid - Classification view   
      *******************************************/
+  /*#region*/
   #inv-display {
     flex-flow: row wrap;
     justify-content: space-evenly;
   }
 
-  #inv-display h2 { font-size: 1rem; }
+  #inv-display h2 {
+    font-size: 1rem;
+  }
 
   #inv-display li {
     max-width: 200px;
@@ -739,27 +699,26 @@ input[name$='Thumbnail'] {
     border-radius: 10px;
   }
 
-  #inv-display a { height: 150px; }
-
-  #inv-display img { border-radius: 10px 10px; }
-
-  #inv-display div { width: 100%; height: 100px; }
-
-  /* Desktop card sizing overrides */
-  #inv-display .card {
-    width: 200px;
-    min-height: 340px;
+  #inv-display a {
+    height: 150px;
   }
 
-  #inv-display .card-image { aspect-ratio: 4 / 3; }
+  #inv-display img {
+    border-radius: 10px 10px;
+  }
 
-  .card-title { font-size: 1rem; }
-  .card-desc { font-size: 0.9rem; }
-  .card-cta { padding: 0.6rem 0; width: 100%; }
+  #inv-display div {
+    width: 100%;
+    height: 100px;
+  }
 
+  /*#endregion*/
   /*******************************************
      3.7 Detail layout - Vehicle Detail view  
     *******************************************/
+  /*#region*/
+
+
   #detail #vehicle-display {
     margin: 0 0 1rem;
   }
@@ -777,4 +736,6 @@ input[name$='Thumbnail'] {
     width: auto;
     object-fit: contain;
   }
+
+  /*#endregion*/
 }
