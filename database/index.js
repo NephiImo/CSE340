@@ -31,6 +31,5 @@ pool.on("error", (err) => {
 module.exports = {
   // standard query wrapper
   query: (text, params) => pool.query(text, params),
-  // raw pool available if you need transactions, etc.
   pool,
 }
