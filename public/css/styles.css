@@ -459,10 +459,7 @@ text-align: center;
   margin-bottom: .75rem;
 }
 
-/* -------------------------
-   Login card (matches screenshot)
-   Targets: .account-login-container, .login-form, .login-btn
-   ------------------------- */
+/* login view */
 .account-login-container {
   max-width: 380px;
   margin: 3rem auto;
@@ -595,6 +592,178 @@ text-align: center;
     font-size: 0.85rem;
   }
 }
+
+/* register view */
+.account-register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  box-sizing: border-box;
+  background: linear-gradient(180deg, #fbfdff 0%, #f6f9ff 100%);
+  font-family: Inter, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #111827;
+}
+
+/* Card */
+.register-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 32px;
+  box-shadow: 0 6px 18px rgba(17, 24, 39, 0.08);
+  border: 1px solid rgba(17, 24, 39, 0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative accent (subtle, not required) */
+.register-card::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  background-image: url("/mnt/data/59e1952a-44b8-4090-9d0e-9c843049996f.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  filter: grayscale(100%);
+  pointer-events: none;
+}
+
+/* Title */
+.register-card h1 {
+  margin: 0 0 18px 0;
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  color: #111827;
+}
+
+/* Flash messages area (if messages() injects markup) */
+.messages { margin-bottom: 12px; }
+.messages .flash {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid rgba(133, 100, 4, 0.12);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+/* Form */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Label and inputs */
+.register-form label {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: #111827;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 2px solid #1f2937;
+  outline: none;
+  background: #fff;
+  color: #111827;
+  transition: box-shadow 0.15s ease, border-color 0.12s ease;
+}
+
+/* Focus / accessibility */
+.register-form input:focus {
+  border-color: #1967d2;
+  box-shadow: 0 6px 18px rgba(25, 103, 210, 0.12);
+}
+
+/* Required visual cue */
+.register-form input[required] {
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+}
+
+/* Small helper text */
+.hint {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-top: -10px;
+  margin-bottom: 6px;
+}
+
+/* Password requirements list */
+.password-requirements {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.45;
+}
+
+/* Active/valid requirement (toggle with JS by adding .met) */
+.password-requirements li {
+  margin-bottom: 6px;
+}
+.password-requirements li.met {
+  color: #0f4fb8;
+  font-weight: 600;
+}
+
+/* Submit button (pill) */
+.register-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(180deg, #1967d2 0%, #0f4fb8 100%);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(25, 103, 210, 0.18);
+  transition: transform 0.08s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+  align-self: flex-start;
+}
+.register-btn:active { transform: translateY(1px) scale(0.998); }
+.register-btn:focus { outline: 3px solid rgba(25, 103, 210, 0.14); }
+
+/* Error state for fields (server-side injected .field-error wrapper) */
+.field-error input {
+  border-color: #e11d48;
+  box-shadow: 0 6px 18px rgba(225, 29, 72, 0.08);
+}
+.field-error .hint { color: #e11d48; }
+
+/* Mobile tweaks */
+@media (max-width: 520px) {
+  .register-card { padding: 20px; border-radius: 8px; }
+  .register-card::before { display: none; }
+  .register-btn { width: 100%; text-align: center; align-self: stretch; }
+}
+
+/* Assistive-only text */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden; clip: rect(1px,1px,1px,1px);
+  white-space: nowrap; border: 0; padding: 0; margin: -1px;
+}
+
 /*#endregion*/
 
 /************************************************

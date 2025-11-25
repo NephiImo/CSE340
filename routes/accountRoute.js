@@ -9,9 +9,15 @@ const accountController = require("../controllers/accountController")
 const utilities = require("../utilities")
 
 /* **********************************
-* Account routes
+* Deliver login view
 * Unit 4, deliver login view activity                                      
 * ********************************* */
 router.get("/login", utilities.handleErrors(accountController.buildLogin))
+
+/* **********************************
+* Deliver Registeration View
+* Unit 4, deliver registration view activity                                      
+* ********************************* */
+router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
 module.exports = router;
