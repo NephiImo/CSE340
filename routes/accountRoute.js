@@ -20,4 +20,10 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin))
 * ********************************* */
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 
+/* **********************************
+* Post Registeration
+* Unit 4, Process registration activity                                      
+* ********************************* */
+router.post("/register", utilities.handleErrors(accountController.registerAccount))
+
 module.exports = router;
