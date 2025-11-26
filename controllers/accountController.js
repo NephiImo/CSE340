@@ -2,7 +2,7 @@
 * Account Controller
 * Unit 4, process registration activity                                      
 * ********************************* */  
-const accountModel = require("../models/accountModel")
+const accountModel = require("../models/account-model")
 
 /* **********************************
 * Account Controller
