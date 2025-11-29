@@ -19,6 +19,7 @@ async function buildLogin(req, res, next) {
     res.render("account/login", {
         title: "Login",
         nav,
+        errors: null,
     })
 }
 
@@ -53,15 +54,21 @@ async function registerAccount(req, res) {
       "notice",
       `Congratulations, you\'re registered ${account_firstname}. Please log in.`
     )
-    res.status(201).render("account/login", {
+    return res.status(201).render("account/login", {
       title: "Login",
       nav,
+      errors: null,
     })
   } else {
     req.flash("notice", "Sorry, the registration failed.")
-    res.status(501).render("account/register", {
-      title: "Registration",
+    return res.status(501).render("account/register", {
+      title: "Register",
       nav,
+      errors: null,
+      // repopulate submitted values so the user doesn't lose what they typed
+      account_firstname,
+      account_lastname,
+      account_email,
     })
   }
 }
