@@ -38,6 +38,19 @@ invCont.buildDetail = async function (req, res, next) {
   })
 }
 
+/* *******************************
+ *  Build inventory management view
+ * ***************************** */
+async function buildManagement(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("inventory/management", {
+    title: "Inventory Management",
+    nav,
+    errors: null
+  })
+}
+
+
 /* ****************************************
  *  Process intentional error
  *  Assignment 3, Task 3
@@ -46,4 +59,4 @@ invCont.throwError = async function (req, res) {
   throw new Error("I am an intentional error")
 }
 
-module.exports = invCont
+module.exports ={ invCont, buildManagement }

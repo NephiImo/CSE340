@@ -13,6 +13,12 @@ router.get("/type/:classificationId", invController.buildByClassificationId);
 router.get("/detail/:id", 
 utilities.handleErrors(invController.buildDetail))
 
+/* *******************************
+ * Route to build management view
+ ******************************* */
+router.get("/",
+utilities.handleErrors(invController.buildManagement))
+
 /* ****************************************
  * Error Route
  * Assignment 3, Task 3
