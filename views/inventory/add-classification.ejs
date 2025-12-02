@@ -1,0 +1,34 @@
+<main class="inv-form-container">
+  <h1><%= title %></h1>
+
+  <!-- Flash Messages -->
+  <%- messages() %>
+
+  <!-- Server-side validation errors -->
+  <% if (errors && errors.length > 0) { %>
+    <ul class="notice">
+      <% errors.forEach(err => { %>
+        <li><%= err.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <form action="/inventory/add-classification" method="POST" class="inv-form" novalidate>
+    <label for="classification_name">Classification Name</label>
+    <input 
+      type="text" 
+      id="classification_name" 
+      name="classification_name" 
+      required
+      pattern="^[A-Za-z0-9]+$"
+      title="No spaces or special characters allowed."
+      value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>"
+    />
+
+    <p class="form-note">
+      Classification names must contain **letters or numbers only** — no spaces or special characters.
+    </p>
+
+    <button type="submit" class="btn">Add Classification</button>
+  </form>
+</main>
