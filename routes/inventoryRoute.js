@@ -38,7 +38,7 @@ router.get(
 // Process Add Classification
 router.post(
   "/add-classification",
-  invValidate.ClassificationRules(),
+  invValidate.classificationRules(),
   invValidate.checkClassificationData,
   utilities.handleErrors(invController.addClassification)
 )
