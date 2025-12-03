@@ -1,61 +1,52 @@
-// Needed Resources 
-const express = require("express")
-const router = new express.Router() 
-const invController = require("../controllers/invController")
-const invValidate = require("../utilities/inventory-validation")
-const utilities = require("../utilities")
+const express = require("express");
+const router = express.Router();
+
+const invController = require("../controllers/invController");
+const invValidate = require("../utilities/inventory-validation");
+const utilities = require("../utilities");
+
+// simple async wrapper (use your real utilities.handleErrors if you prefer)
+const asyncHandler = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+
+function assertHandler(fn, name) {
+  if (typeof fn !== "function") {
+    throw new Error(`inventoryRoute.js expected handler "${name}" to be a function but got ${typeof fn}. Check controller export or spelling.`);
+  }
+  return asyncHandler(fn);
+}
+
+/* Routes */
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get("/type/:classificationId", assertHandler(invController.buildByClassificationId, "buildByClassificationId"));
 
-/* ****************************************
- * Route to build vehicle detail view
- **************************************** */
-router.get("/detail/:id", 
-utilities.handleErrors(invController.buildDetail))
+// Route to build vehicle detail view
+router.get("/detail/:id", assertHandler(invController.buildDetail, "buildDetail"));
 
-/* *******************************
- * Route to build management view
- ******************************* */
-router.get("/",
-utilities.handleErrors(invController.buildManagement))
+// Route to build management view (mounted at /inv in server.js)
+router.get("/", assertHandler(invController.buildManagement, "buildManagement"));
 
-/* ****************************************
- * Error Route
- * Assignment 3, Task 3
- **************************************** */
-router.get(
-  "/broken",
-  utilities.handleErrors(invController.throwError)
-)
+// Error route
+router.get("/broken", assertHandler(invController.throwError, "throwError"));
 
-// Route to add Classification View
-router.get(
-  "/add-classification",
-  utilities.handleErrors(invController.buildAddClassification)
-)
+// Add classification view
+router.get("/add-classification", assertHandler(invController.buildAddClassification, "buildAddClassification"));
 
-// Route to add Inventory View
-router.get(
-  "/add-inventory",
-  utilities.handleErrors(invController.buildAddInventory)
-)
-
+// Add inventory view
+router.get("/add-inventory", assertHandler(invController.buildAddInventory, "buildAddInventory"));
 
 // Process Add Classification
-router.post(
-  "/add-classification",
+router.post("/add-classification",
   invValidate.classificationRules(),
   invValidate.checkClassificationData,
-  utilities.handleErrors(invController.addClassification)
-)
+  assertHandler(invController.addClassification, "addClassification")
+);
 
 // Process Add Inventory
-router.post(
-  "/add-inventory",
+router.post("/add-inventory",
   invValidate.inventoryRules(),
   invValidate.checkInventoryData,
-  utilities.handleErrors(invController.addInventory)
-)
+  assertHandler(invController.addInventory, "addInventory")
+);
 
 module.exports = router;
