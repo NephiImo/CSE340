@@ -17,7 +17,7 @@ utilities.handleErrors(invController.buildDetail))
 /* *******************************
  * Route to build management view
  ******************************* */
-router.get("/inv",
+router.get("/",
 utilities.handleErrors(invController.buildManagement))
 
 /* ****************************************
