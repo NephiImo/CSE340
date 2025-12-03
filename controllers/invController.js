@@ -79,14 +79,30 @@ async function buildAddClassification(req, res, next) {
 /* *******************************
  * Build Add Inventory View
  *********************************/
-async function buildAddInventory(req, res, next) {
-  try {
-    // quick test response to confirm router+controller wiring
-    return res.status(200).send("buildAddInventory route is reachable");
-  } catch (err) {
-    next(err);
+async function buildAddInventory(req, res, next) { 
+  try { 
+    const nav = await utilities.getNav(); 
+    const classificationList = await utilities.buildClassificationList(); // no selection 
+    res.render("inventory/add-inventory", 
+      { 
+        title: "Add Inventory Item", 
+        nav, 
+        errors: null, 
+        classificationList, 
+        classification_id: "", 
+        inv_make: "", 
+        inv_model: "", 
+        inv_year: "", 
+        inv_description: "", 
+        inv_price: "", 
+        inv_miles: "", 
+        inv_image: "/images/no-image-available.png", 
+        inv_thumbnail: "/images/no-image-available-tn.png", 
+      }); 
+    } catch (err) { 
+      next(err); 
+    } 
   }
-}
 
 
 
@@ -200,4 +216,4 @@ async function addInventory(req, res, next) {
 
 
 // Export: spread invCont so routes can call invController.buildDetail, etc.
-module.exports = { ...invCont, buildManagement, buildAddClassification, addClassification, buildAddInventory, addInventory };
+module.exports = { invCont, buildManagement, buildAddClassification, addClassification, buildAddInventory, addInventory };
