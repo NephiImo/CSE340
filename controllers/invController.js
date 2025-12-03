@@ -215,5 +215,15 @@ async function addInventory(req, res, next) {
 }
 
 
-// Export: spread invCont so routes can call invController.buildDetail, etc.
-module.exports = { invCont, buildManagement, buildAddClassification, addClassification, buildAddInventory, addInventory };
+module.exports = {
+  // functions defined on invCont
+  buildByClassificationId: invCont.buildByClassificationId,
+  buildDetail: invCont.buildDetail,
+  throwError: invCont.throwError,
+  // top-level functions
+  buildManagement,
+  buildAddClassification,
+  buildAddInventory,
+  addClassification,
+  addInventory,
+};
