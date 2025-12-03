@@ -82,7 +82,7 @@ async function buildAddClassification(req, res, next) {
 async function buildAddInventory(req, res, next) {
   try {
     const nav = await utilities.getNav();
-    const classificationList = await utilities.buildClassificationList(); // no selection
+    const classificationList = await utilities.buildClassificationGrid(); // no selection
     res.render("inventory/add-inventory", {
       title: "Add Inventory Item",
       nav,

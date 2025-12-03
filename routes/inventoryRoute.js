@@ -39,7 +39,7 @@ router.get(
 router.get(
   "/add-inventory",
   utilities.handleErrors(invController.buildAddInventory)
-);
+)
 
 
 // Process Add Classification
@@ -56,6 +56,6 @@ router.post(
   invValidate.inventoryRules(),
   invValidate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
-);
+)
 
 module.exports = router;
