@@ -81,10 +81,13 @@ async function addInventoryItem(item) {
       item.inv_thumbnail,
     ];
     const result = await pool.query(sql, values);
-    return result.rows[0]; // truthy on success
+    // return the inserted row
+    return result.rows[0];
   } catch (error) {
-    console.error("addInventoryItem error: ", error);
-    return false;
+    console.error("addInventoryItem error:", error);
+    // either return false OR rethrow to let controller handle it.
+    // Rethrow to make debugging clearer:
+    throw error;
   }
 }
 
