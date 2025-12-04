@@ -150,7 +150,7 @@ async function addClassification(req, res, next) {
 }
 
 /* *******************************
- * Process Add Classification
+ * Process Add Inventory
  *********************************/
 async function addInventory(req, res, next) {
   try {
@@ -166,6 +166,8 @@ async function addInventory(req, res, next) {
       inv_thumbnail,
     } = req.body;
 
+    console.log("DEBUG addInventory: req.body =", req.body);
+
     // call model to insert
     const added = await invModel.addInventoryItem({
       classification_id,
@@ -179,8 +181,9 @@ async function addInventory(req, res, next) {
       inv_thumbnail,
     });
 
+    console.log("DEBUG addInventory: model returned:", added);
+
     if (added) {
-      // refresh nav so new item appears immediately
       const nav = await utilities.getNav();
       req.flash("notice", `Vehicle "${inv_make} ${inv_model} (${inv_year})" added successfully.`);
       return res.status(201).render("inventory/management", {
@@ -190,7 +193,8 @@ async function addInventory(req, res, next) {
       });
     }
 
-    // insertion failed
+    // insertion failed (model returned falsy)
+    console.error("addInventory: model returned falsy (insertion failed)");
     const classificationList = await utilities.buildClassificationList(classification_id);
     const nav = await utilities.getNav();
     req.flash("notice", "Sorry, adding the vehicle failed.");
@@ -210,6 +214,8 @@ async function addInventory(req, res, next) {
       inv_thumbnail,
     });
   } catch (err) {
+    // log the error to console so you can see the real reason in logs
+    console.error("addInventory: caught error:", err);
     next(err);
   }
 }
