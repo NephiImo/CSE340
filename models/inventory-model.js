@@ -63,9 +63,6 @@ async function addClassification(classification_name) {
 /* ***************************
  *  Add a new inventory item
  * ************************** */
-// src/models/inventory-model.js
-const pool = require("../database/dbConnection"); // adapt to your project
-
 async function addInventoryItem(item) {
   const sql = `INSERT INTO inventory
     (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color)
