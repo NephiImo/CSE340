@@ -781,13 +781,17 @@ text-align: center;
   color: #111827;
 }
 
-/* Card used for forms (keeps things consistent with register.css) */
+/* Card used for forms */
 .register-card {
   background: #ffffff;
   border-radius: 10px;
   padding: 28px;
   box-shadow: 0 6px 18px rgba(17,24,39,0.06);
   border: 1px solid rgba(17,24,39,0.06);
+  width: 100%;
+  max-width: 980px;       /* desktop max - adjust up/down to taste */
+  margin: 0 auto;         /* center horizontally */
+  box-sizing: border-box;
 }
 
 /* Headings */
@@ -824,12 +828,14 @@ text-align: center;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px 20px;
   align-items: start;
+  width: 100%;
 }
 
 .inv-form > div {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
 }
 
 #classificationSelect,
@@ -837,7 +843,8 @@ text-align: center;
 #inv_image,
 #inv_thumbnail,
 .inv-form .btn,
-.inv-form .register-btn {
+.inv-form .register-btn
+.inv-form > div:first-child {
   grid-column: 1 / -1;
 }
 
