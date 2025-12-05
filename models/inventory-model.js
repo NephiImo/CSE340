@@ -63,31 +63,37 @@ async function addClassification(classification_name) {
 /* ***************************
  *  Add a new inventory item
  * ************************** */
+// src/models/inventory-model.js
+const pool = require("../database/dbConnection"); // adapt to your project
+
 async function addInventoryItem(item) {
+  const sql = `INSERT INTO inventory
+    (classification_id, inv_make, inv_model, inv_description, inv_image, inv_thumbnail, inv_price, inv_year, inv_miles, inv_color)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+    RETURNING *;`;
+  const values = [
+    item.classification_id,
+    item.inv_make,
+    item.inv_model,
+    item.inv_description,
+    item.inv_image,
+    item.inv_thumbnail,
+    item.inv_price,
+    item.inv_year,
+    item.inv_miles,
+    item.inv_color,
+  ];
+
+  console.log("DEBUG addInventoryItem - SQL values:", values);
+
   try {
-    const sql = `INSERT INTO inventory
-      (classification_id, inv_make, inv_model, inv_year, inv_description, inv_price, inv_miles, inv_image, inv_thumbnail)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-      RETURNING *;`;
-    const values = [
-      item.classification_id,
-      item.inv_make,
-      item.inv_model,
-      item.inv_year,
-      item.inv_description,
-      item.inv_price,
-      item.inv_miles,
-      item.inv_image,
-      item.inv_thumbnail,
-    ];
     const result = await pool.query(sql, values);
-    // return the inserted row
+    console.log("DEBUG addInventoryItem - inserted:", result.rows[0]);
     return result.rows[0];
-  } catch (error) {
-    console.error("addInventoryItem error:", error);
-    // either return false OR rethrow to let controller handle it.
-    // Rethrow to make debugging clearer:
-    throw error;
+  } catch (err) {
+    console.error("ERROR addInventoryItem - DB error:", err);
+    // rethrow so controller can report/log and present a failure message
+    throw err;
   }
 }
 

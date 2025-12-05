@@ -21,41 +21,57 @@ invValidate.inventoryRules = () => {
       .trim()
       .notEmpty()
       .withMessage("Please choose a classification."),
+
     body("inv_make")
       .trim()
-      .isLength({ min: 2 })
-      .withMessage("Please provide a make with at least 2 characters."),
+      .isLength({ min: 3 })
+      .withMessage("Make must be at least 3 characters."),
+
     body("inv_model")
       .trim()
-      .isLength({ min: 1 })
-      .withMessage("Please provide a model."),
-    body("inv_year")
-      .trim()
-      .matches(/^[0-9]{4}$/)
-      .withMessage("Please provide a 4-digit year."),
+      .isLength({ min: 3 })
+      .withMessage("Model must be at least 3 characters."),
+
     body("inv_description")
       .trim()
       .isLength({ min: 10 })
-      .withMessage("Please provide a description of at least 10 characters."),
-    body("inv_price")
-      .trim()
-      .isFloat({ gt: 0 })
-      .withMessage("Please provide a price greater than 0."),
-    body("inv_miles")
-      .trim()
-      .isInt({ min: 0 })
-      .withMessage("Please provide a valid mileage (0 or greater)."),
+      .withMessage("Description must be at least 10 characters."),
+
     body("inv_image")
       .trim()
       .notEmpty()
-      .withMessage("Please provide an image path."),
+      .withMessage("Image path is required."),
+
     body("inv_thumbnail")
       .trim()
       .notEmpty()
-      .withMessage("Please provide a thumbnail path."),
+      .withMessage("Thumbnail path is required."),
+
+    body("inv_price")
+      .trim()
+      .notEmpty()
+      .withMessage("Price is required.")
+      .isFloat({ gt: 0 })
+      .withMessage("Price must be a number greater than 0."),
+
+    body("inv_year")
+      .trim()
+      .matches(/^[0-9]{4}$/)
+      .withMessage("Year must be a 4-digit year (e.g. 2020)."),
+
+    body("inv_miles")
+      .trim()
+      .notEmpty()
+      .withMessage("Miles is required.")
+      .isInt({ min: 0 })
+      .withMessage("Miles must be an integer >= 0."),
+
+    body("inv_color")
+      .trim()
+      .isLength({ min: 2 })
+      .withMessage("Color must be at least 2 characters."),
   ];
 };
-
 
 
 /* Check validation results for add-classification */
@@ -87,11 +103,19 @@ invValidate.checkInventoryData = async (req, res, next) => {
     inv_miles,
     inv_image,
     inv_thumbnail,
+    inv_color,
   } = req.body;
 
   if (!errors.isEmpty()) {
-    // Build classification select list with the previously chosen classification selected
-    let classificationList = await utilities.buildClassificationList(classification_id);
+    // build classification select with the chosen value selected
+    let classificationList = "";
+    try {
+      classificationList = await utilities.buildClassificationList(classification_id);
+    } catch (err) {
+      console.error("classificationList build failed:", err);
+      // fallback empty select
+      classificationList = '<select name="classification_id" id="classificationList" required><option value="">Choose a Classification</option></select>';
+    }
 
     let nav = await utilities.getNav();
     return res.status(400).render("inventory/add-inventory", {
@@ -108,10 +132,11 @@ invValidate.checkInventoryData = async (req, res, next) => {
       inv_miles,
       inv_image,
       inv_thumbnail,
+      inv_color,
     });
   }
+
   next();
 };
-
 
 module.exports = invValidate;

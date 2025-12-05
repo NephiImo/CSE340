@@ -48,7 +48,7 @@ invCont.buildDetail = async function (req, res, next) {
 };
 
 /* *******************************
- *  Build inventory management view
+ *  Build vehicle management view
  * ***************************** */
 async function buildManagement(req, res, next) {
   try {
@@ -79,31 +79,37 @@ async function buildAddClassification(req, res, next) {
 /* *******************************
  * Build Add Inventory View
  *********************************/
-async function buildAddInventory(req, res, next) { 
-  try { 
-    const nav = await utilities.getNav(); 
-    const classificationList = await utilities.buildClassificationList(); // no selection 
-    res.render("inventory/add-inventory", 
-      { 
-        title: "Add Inventory Item", 
-        nav, 
-        errors: null, 
-        classificationList, 
-        classification_id: "", 
-        inv_make: "", 
-        inv_model: "", 
-        inv_year: "", 
-        inv_description: "", 
-        inv_price: "", 
-        inv_miles: "", 
-        inv_image: "/images/no-image-available.png", 
-        inv_thumbnail: "/images/no-image-available-tn.png", 
-      }); 
-    } catch (err) { 
-      next(err); 
-    } 
-  }
+async function buildAddInventory(req, res, next) {
+  try {
+    const nav = await utilities.getNav();
+    let classificationList = "";
+    try {
+      classificationList = await utilities.buildClassificationList();
+    } catch (err) {
+      console.error("buildAddInventory: buildClassificationList failed:", err);
+      classificationList = '<select name="classification_id" id="classificationList" required><option value="">Choose a Classification</option></select>';
+    }
 
+    res.render("inventory/add-inventory", {
+      title: "Add Inventory Item",
+      nav,
+      errors: null,
+      classificationList,
+      classification_id: "",
+      inv_make: "",
+      inv_model: "",
+      inv_year: "",
+      inv_description: "",
+      inv_price: "",
+      inv_miles: "",
+      inv_image: "/images/vehicles/no-image.png",
+      inv_thumbnail: "/images/vehicles/no-image.png",
+      inv_color: "",
+    });
+  } catch (err) {
+    next(err);
+  }
+}
 
 
 /* ****************************************
@@ -154,38 +160,50 @@ async function addClassification(req, res, next) {
  *********************************/
 async function addInventory(req, res, next) {
   try {
+    console.log("DEBUG addInventory - req.body:", req.body);
+
+    // Check express-validator result (should normally be handled by middleware, but double-check)
+    const { validationResult } = require("express-validator");
+    const vres = validationResult(req);
+    console.log("DEBUG addInventory - validationResult:", vres.isEmpty(), vres.array());
+
     const {
       classification_id,
       inv_make,
       inv_model,
-      inv_year,
       inv_description,
-      inv_price,
-      inv_miles,
       inv_image,
       inv_thumbnail,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
     } = req.body;
 
-    console.log("DEBUG addInventory: req.body =", req.body);
+    // Convert and sanitize numeric fields as necessary
+    const item = {
+      classification_id: Number(classification_id),
+      inv_make: inv_make?.trim(),
+      inv_model: inv_model?.trim(),
+      inv_description: inv_description?.trim(),
+      inv_image: inv_image?.trim(),
+      inv_thumbnail: inv_thumbnail?.trim(),
+      inv_price: Number(inv_price),
+      inv_year: String(inv_year).trim(),
+      inv_miles: Number(inv_miles),
+      inv_color: inv_color?.trim(),
+    };
 
-    // call model to insert
-    const added = await invModel.addInventoryItem({
-      classification_id,
-      inv_make,
-      inv_model,
-      inv_year,
-      inv_description,
-      inv_price,
-      inv_miles,
-      inv_image,
-      inv_thumbnail,
-    });
+    console.log("DEBUG addInventory - normalized item:", item);
 
-    console.log("DEBUG addInventory: model returned:", added);
+    // Insert into DB
+    const added = await invModel.addInventoryItem(item);
+    console.log("DEBUG addInventory - model returned:", !!added);
 
     if (added) {
+      // Success: refresh nav so new item appears immediately
       const nav = await utilities.getNav();
-      req.flash("notice", `Vehicle "${inv_make} ${inv_model} (${inv_year})" added successfully.`);
+      req.flash("notice", `Vehicle "${item.inv_make} ${item.inv_model} (${item.inv_year})" added successfully.`);
       return res.status(201).render("inventory/management", {
         title: "Inventory Management",
         nav,
@@ -193,8 +211,7 @@ async function addInventory(req, res, next) {
       });
     }
 
-    // insertion failed (model returned falsy)
-    console.error("addInventory: model returned falsy (insertion failed)");
+    // Fallback (shouldn't normally be reached if model throws on error)
     const classificationList = await utilities.buildClassificationList(classification_id);
     const nav = await utilities.getNav();
     req.flash("notice", "Sorry, adding the vehicle failed.");
@@ -212,14 +229,39 @@ async function addInventory(req, res, next) {
       inv_miles,
       inv_image,
       inv_thumbnail,
+      inv_color,
     });
   } catch (err) {
-    // log the error to console so you can see the real reason in logs
-    console.error("addInventory: caught error:", err);
-    next(err);
+    // Log the real error and show friendly failure in the add-inventory view
+    console.error("addInventory caught error:", err);
+
+    // Re-render the add-inventory page with sticky values and the DB error as a notice
+    try {
+      const classificationList = await utilities.buildClassificationList(req.body.classification_id);
+      const nav = await utilities.getNav();
+      req.flash("notice", "Sorry, adding the vehicle failed. See server logs for details.");
+      return res.status(500).render("inventory/add-inventory", {
+        title: "Add Inventory Item",
+        nav,
+        errors: null,
+        classificationList,
+        classification_id: req.body.classification_id,
+        inv_make: req.body.inv_make,
+        inv_model: req.body.inv_model,
+        inv_year: req.body.inv_year,
+        inv_description: req.body.inv_description,
+        inv_price: req.body.inv_price,
+        inv_miles: req.body.inv_miles,
+        inv_image: req.body.inv_image,
+        inv_thumbnail: req.body.inv_thumbnail,
+        inv_color: req.body.inv_color,
+      });
+    } catch (renderErr) {
+      // If render fails, pass original error to global handler
+      next(err);
+    }
   }
 }
-
 
 module.exports = {
   // functions defined on invCont
