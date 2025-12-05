@@ -779,9 +779,9 @@ text-align: center;
   box-sizing: border-box;
   font-family: Inter, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: #111827;
+  background: transparent;
 }
 
-/* Card used for forms (keeps things consistent with register.css) */
 .register-card {
   background: #ffffff;
   border-radius: 10px;
@@ -815,20 +815,36 @@ text-align: center;
   border: 1px solid rgba(15,79,184,0.08);
 }
 
-/* Forms */
+/* ---------------------------
+   Forms (updated for add-inventory)
+   --------------------------- */
+
+/* Use grid layout for larger forms (two-column), fall back to single column on small screens */
 .inv-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 20px;
+  align-items: start;
 }
 
+/* Make the classification select and description and submit button span full width */
+.inv-form > div[class]:nth-child(1),
+.inv-form > div[class]:nth-child(4),
+.inv-form > div[class] .btn,
+.inv-form > div[class] .register-btn {
+  grid-column: 1 / -1;
+}
+
+/* Labels */
 .inv-form label {
   font-weight: 600;
   font-size: 0.95rem;
   margin-bottom: 6px;
   color: #111827;
+  display: block;
 }
 
+/* Inputs, textarea, select */
 .inv-form input[type="text"],
 .inv-form input[type="email"],
 .inv-form input[type="number"],
@@ -846,14 +862,27 @@ text-align: center;
   color: #111827;
 }
 
+/* Ensure the injected select inside #classificationSelect inherits form styles */
+#classificationSelect select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 6px;
+  border: 2px solid #1f2937;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Textarea */
 .inv-form textarea {
   min-height: 110px;
   resize: vertical;
 }
 
+/* Focus states */
 .inv-form input:focus,
 .inv-form textarea:focus,
-.inv-form select:focus {
+.inv-form select:focus,
+#classificationSelect select:focus {
   outline: none;
   border-color: #1967d2;
   box-shadow: 0 6px 18px rgba(25,103,210,0.08);
@@ -864,9 +893,11 @@ text-align: center;
 .form-note {
   font-size: 0.9rem;
   color: #6b7280;
-  margin-top: -6px;
+  margin-top: 6px;
+  display: block;
 }
 
+/* Flash / notice and validation errors */
 .notice,
 .form-errors {
   background: #fff3cd;
@@ -877,7 +908,12 @@ text-align: center;
   margin-bottom: 12px;
 }
 
-/* Submit button */
+.form-errors ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+/* Submit button styles */
 .btn,
 .register-btn {
   display: inline-block;
@@ -891,7 +927,16 @@ text-align: center;
   box-shadow: 0 8px 20px rgba(25,103,210,0.14);
 }
 
-/* Classification grid (list of vehicles) */
+/* Put submit full width on forms (spans columns already) */
+.inv-form .btn,
+.inv-form .register-btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+/* ---------------------------
+   Classification grid (list of vehicles)
+   --------------------------- */
 #inv-display {
   list-style: none;
   padding: 0;
@@ -980,7 +1025,9 @@ text-align: center;
   border-bottom: 1px dashed rgba(17,24,39,0.04);
 }
 
-/* Small screens */
+/* ---------------------------
+   Responsiveness
+   --------------------------- */
 @media (max-width: 900px) {
   #inv-display {
     grid-template-columns: repeat(2, 1fr);
@@ -993,6 +1040,20 @@ text-align: center;
   #vehicle-display .vehicleDetail {
     padding-left: 0;
     margin-top: 12px;
+  }
+  .inv-form {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 780px) {
+  .inv-form {
+    grid-template-columns: 1fr;
+  }
+  .inv-form .btn,
+  .inv-form .register-btn {
+    width: 100%;
+    justify-self: stretch;
   }
 }
 
@@ -1011,7 +1072,6 @@ text-align: center;
     text-align: center;
   }
 }
-/*#endregion*/
 
 /************************************************
    2.5 Vehicles grid - classification view
