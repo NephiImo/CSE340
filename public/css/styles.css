@@ -823,7 +823,6 @@ text-align: center;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 100%;
 }
 
 .inv-form {
