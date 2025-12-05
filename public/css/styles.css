@@ -819,9 +819,12 @@ text-align: center;
   border: 1px solid rgba(15,79,184,0.08);
 }
 
-/* ============================================================
-   IMPROVED FORM LAYOUT (FULL-WIDTH + 2-COLUMN DESKTOP)
-   ============================================================ */
+.class-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
 
 .inv-form {
   display: grid;
