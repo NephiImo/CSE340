@@ -1,0 +1,16 @@
+<h1><%= title %></h1>
+
+<!-- Flash messages -->
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+<% errors.array().forEach(error => { %>
+  <li><%= error.msg %></li>
+<%  }) %>
+</ul>
+<% } %>
+
+<section class="account-logged-in-message">
+  <h2>Welcome, <%= account_firstname %> <%= account_lastname %>!</h2>
+  <p>You are now logged in.</p>

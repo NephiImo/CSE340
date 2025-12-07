@@ -16,6 +16,8 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/index")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+
 
 
 /* ***********************
@@ -39,6 +41,8 @@ app.set("layout", "./layouts/layout") // not at views root
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+app.use(cookieParser())
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
