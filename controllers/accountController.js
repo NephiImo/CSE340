@@ -36,7 +36,7 @@ async function buildRegister(req, res, next) {
 /* Build Account Management view */
 async function buildAccountManagement(req, res, next) {
   try {
-    res.render("account/", {
+    res.render("account/account-management", {
       title: "Account Management",
       nav: await utilities.getNav(),
       errors: null,
