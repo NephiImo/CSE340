@@ -35,15 +35,12 @@ async function buildRegister(req, res, next) {
 
 /* Build Account Management view */
 async function buildAccountManagement(req, res, next) {
-  try {
+    let nav = await utilities.getNav()
     res.render("account/account-management", {
-      title: "Account Management",
-      nav: await utilities.getNav(),
-      errors: null,
-    });
-  } catch (error) {
-    next(error);
-  }
+        title: "Account Management",
+        nav,
+        errors: null,
+    })
 }
 
 
@@ -128,7 +125,7 @@ async function accountLogin(req, res) {
       } else {
         res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
       }
-      return res.redirect("/account/")
+      return res.redirect("/account")
     }
     else {
       req.flash("message notice", "Please check your credentials and try again.")
