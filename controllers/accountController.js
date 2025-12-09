@@ -35,14 +35,25 @@ async function buildRegister(req, res, next) {
 
 /* Build Account Management view */
 async function buildAccountManagement(req, res, next) {
-    let nav = await utilities.getNav()
-    res.render("account/account-management", {
-        title: "Account Management",
-        nav,
-        errors: null,
-    })
-}
+  try {
+    let nav = "";
+    try {
+      nav = await utilities.getNav();
+    } catch (navErr) {
+      console.error("buildAccountManagement: getNav failed:", navErr);
+      nav = ""; // fallback so page still renders
+    }
 
+    // Render the view. Ensure file is located at: views/account/account-management.ejs
+    return res.render("account/account-management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
 
 /* ****************************************
 *  Process Registration
