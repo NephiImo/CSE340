@@ -21,7 +21,7 @@
         <!-- classification select (built by utilities) -->
         <div>
           <label for="classificationList">Classification</label>
-          <div id="classificationSelect"><%- classificationList %></div>
+          <div id="classificationSelect"><%- classificationSelect %></div>
           <p class="hint">Choose the classification the vehicle belongs to.</p>
         </div>
 
@@ -152,6 +152,7 @@
         </div>
 
         <div>
+          <input type="hidden" name="inv_id" value="<%= inv_id %>" />
           <button type="submit" class="btn">Update Vehicle</button>
         </div>
       </form>
