@@ -38,6 +38,7 @@ router.get("/add-inventory", assertHandler(invController.buildAddInventory, "bui
 // Return inventory JSON for a classification (AJAX)
 router.get(
   "/getInventory/:classification_id",
+  utilities.checkAccountType,
   utilities.handleErrors(invController.getInventoryJSON)
 );
 

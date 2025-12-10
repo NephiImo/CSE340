@@ -54,7 +54,7 @@ async function buildManagement(req, res, next) {
   try {
     let nav = await utilities.getNav();
 
-    const classificationSelect = await utilities.buildClassificationList();
+    const classificationSelect = await utilities.buildClassificationList()
 
     res.render("inventory/management", {
       title: "Inventory Management",
