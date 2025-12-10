@@ -1,9 +1,29 @@
-<h1>Vehicle Management</h1>
+<main>
+    <h1>Vehicle Management</h1>
 
-<!-- Flash messages -->
-<%- messages() %>
+    <!-- Flash messages -->
+    <%- messages() %>
 
-<section class="inv-management">
-    <p><a href="/inv/add-classification">Add New Classification</a></p>
-    <p><a href="/inv/add-inventory">Add New Vehicle</a></p>
-</section>
+    <section class="inv-management">
+        <p><a href="/inv/add-classification">Add New Classification</a></p>
+        <p><a href="/inv/add-inventory">Add New Vehicle</a></p>
+    </section>
+
+    <!-- Manage Inventory -->
+    <h2>Manage Inventory</h2>
+    <p>Choose a classification to see all vehicles</p>
+
+    <!-- classificationSelect is injected by the controller -->
+    <div id="classificationSelectWrapper">
+        <%- classificationSelect %>
+    </div>
+
+    <!-- Table that JS will fill -->
+    <div class="table-wrap">
+        <table id="inventoryDisplay"></table>
+    </div>
+
+    <noscript>JavaScript must be enabled to use this page.</noscript>
+</main>
+
+<script src="../../js/inventory.js"></script>

@@ -35,6 +35,13 @@ router.get("/add-classification", assertHandler(invController.buildAddClassifica
 // Add inventory view
 router.get("/add-inventory", assertHandler(invController.buildAddInventory, "buildAddInventory"));
 
+// Return inventory JSON for a classification (AJAX)
+router.get(
+  "/getInventory/:classification_id",
+  utilities.handleErrors(invController.getInventoryJSON)
+);
+
+
 // Process Add Classification
 router.post("/add-classification",
   invValidate.classificationRules(),
