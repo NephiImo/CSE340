@@ -293,5 +293,4 @@ module.exports = {
   buildAddInventory,
   addClassification,
   addInventory,
-  getInventoryJSON,
 };
