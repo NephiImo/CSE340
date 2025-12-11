@@ -375,6 +375,7 @@ module.exports = {
   throwError: invCont.throwError,
   getInventoryJSON: invCont.getInventoryJSON,
   editInventoryView: invCont.editInventoryView,
+  updateInventory: invCont.updateInventory,
   // top-level functions
   buildManagement,
   buildAddClassification,
