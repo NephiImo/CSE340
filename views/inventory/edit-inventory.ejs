@@ -152,8 +152,11 @@
         </div>
 
         <div>
-          <input type="hidden" name="inv_id" value="<%= inv_id %>" />
           <button type="submit" class="btn">Update Vehicle</button>
+
+          <input type="hidden" name="inv_id"
+          <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+          <% } %>>
         </div>
       </form>
     </section>

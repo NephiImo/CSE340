@@ -139,4 +139,70 @@ invValidate.checkInventoryData = async (req, res, next) => {
   next();
 };
 
+
+/* Check validation results for update-inventory (errors will be directed back to the edit view.)*/
+invValidate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req);
+
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_price,
+    inv_miles,
+    inv_image,
+    inv_thumbnail,
+    inv_color,
+    inv_id,
+  } = req.body;
+
+  if (!errors.isEmpty()) {
+    // build classification select with the chosen value selected
+    let classificationSelect = "";
+    try {
+      classificationSelect = await utilities.buildClassificationList(classification_id);
+    } catch (err) {
+      console.error("classificationSelect build failed:", err);
+      classificationSelect =
+        '<select name="classification_id" id="classificationList" required><option value="">Choose a Classification</option></select>';
+    }
+
+    // build nav defensively
+    let nav = "";
+    try {
+      nav = await utilities.getNav();
+    } catch (navErr) {
+      console.error("checkUpdateData: getNav failed:", navErr);
+      nav = "";
+    }
+
+    // create a nicer title when possible
+    const itemName =
+      (inv_make && inv_model) ? `${inv_make} ${inv_model}` : "Inventory Item";
+
+    return res.status(400).render("inventory/edit-inventory", {
+      title: "Edit " + itemName,
+      nav,
+      errors,
+      classificationSelect,
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_price,
+      inv_miles,
+      inv_image,
+      inv_thumbnail,
+      inv_color,
+      inv_id,
+    });
+  }
+
+  next();
+};
+
+
 module.exports = invValidate;

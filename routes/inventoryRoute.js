@@ -47,6 +47,13 @@ router.get(
   utilities.handleErrors(invController.editInventoryView)
 );
 
+// Process Edit Inventory
+router.post(
+  "/update/",
+  invValidate.inventoryRules(),
+  invValidate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
 
 // Process Add Classification
 router.post("/add-classification",
