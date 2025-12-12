@@ -142,6 +142,7 @@ Util.checkJWTToken = (req, res, next) => {
      res.clearCookie("jwt")
      return res.redirect("/account/login")
     }
+    console.log("JWT VERIFY: decoded accountData =>", accountData);
     res.locals.accountData = accountData
     res.locals.loggedin = 1
     next()
@@ -167,6 +168,8 @@ Util.checkJWTToken = (req, res, next) => {
  * Assignment 5 - Task 2
  * Middleware: allow only Employee or Admin
  **************************************** */
+console.log("AUTH CHECK: res.locals.accountData =>", res.locals.accountData);
+
 Util.checkAccountType = (req, res, next) => {
   try {
     // Ensure the JWT middleware ran and set res.locals.accountData
