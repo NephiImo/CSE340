@@ -168,8 +168,6 @@ Util.checkJWTToken = (req, res, next) => {
  * Assignment 5 - Task 2
  * Middleware: allow only Employee or Admin
  **************************************** */
-console.log("AUTH CHECK: res.locals.accountData =>", res.locals.accountData);
-
 Util.checkAccountType = (req, res, next) => {
   try {
     console.log("AUTH CHECK: res.locals.accountData =>", res.locals.accountData);
