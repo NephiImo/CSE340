@@ -163,4 +163,24 @@ Util.checkJWTToken = (req, res, next) => {
   }
  }
 
+/* ****************************************
+ * Assignment 5 task2
+ **************************************** */
+Util.checkAccountType = (req, res, next) => {
+  if(!res.locals.accountData)
+ {
+    return res.redirect("/account/login")
+    }
+  if (res.locals.accountData.account_type == "Employee" ||
+      res.locals.accountData.account_type == "Admin") 
+    {
+      next()
+    } 
+    else 
+    {
+      return res.redirect("/account/login")
+    }
+}
+
+
 module.exports = Util 

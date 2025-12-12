@@ -1,5 +1,7 @@
   <main class="inv-form-container">
+    <% if (title) { %>
     <h1><%= title %></h1>
+    <% } else { res.redirect('/') } %>
 
     <!-- flash messages (connect-flash) -->
     <%- messages() %>

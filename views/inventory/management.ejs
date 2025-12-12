@@ -1,8 +1,20 @@
 <main>
-    <h1>Vehicle Management</h1>
+    <%# Unit 4, Select Inv Item activity %>
+    <% if (title) {%>
+    <h1><%= title %></h1>
+    <%} else {res.redirect('/')} %>
 
     <!-- Flash messages -->
     <%- messages() %>
+
+    <% if (errors) { %>
+    <ul class="message warning">
+        <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+        <%  }) %>
+    </ul>
+    <% } %>
+
 
     <section class="inv-management">
         <p><a href="/inv/add-classification">Add New Classification</a></p>

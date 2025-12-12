@@ -43,4 +43,44 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 )
 
+/* ****************************************
+ *5 /5
+ **************************************** */
+router.get(
+  "/update/:id",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildUpdate)
+)
+
+/* ****************************************
+ *5 -5
+ **************************************** */
+router.post(
+  "/update",
+  utilities.checkLogin,
+  regValidate.updateRules(),
+  regValidate.checkEditData,
+  utilities.handleErrors(accountController.processUpdate)
+)
+
+/* ****************************************
+5-5
+ **************************************** */
+router.post(
+  "/password",
+  utilities.checkLogin,
+  regValidate.passwordRule(),
+  regValidate.checkPassword,
+  utilities.handleErrors(accountController.processPassword)
+)
+
+/* ****************************************
+5-6
+ **************************************** */
+router.get(
+  "/logout",
+  utilities.handleErrors(accountController.accountLogout)
+)
+
+
 module.exports = router;
