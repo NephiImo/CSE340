@@ -23,7 +23,7 @@ router.get("/type/:classificationId", assertHandler(invController.buildByClassif
 router.get("/detail/:id", assertHandler(invController.buildDetail, "buildDetail"));
 
 // Route to build management view (mounted at /inv in server.js)
-router.get("/", utilities.checkAccountType, assertHandler(invController.buildManagement, "buildManagement"));
+router.get("/",utilities.checkJWTToken, utilities.checkAccountType, assertHandler(invController.buildManagement, "buildManagement"));
 
 // Error route
 router.get("/broken", assertHandler(invController.throwError, "throwError"));

@@ -164,23 +164,35 @@ Util.checkJWTToken = (req, res, next) => {
  }
 
 /* ****************************************
- * Assignment 5 task2
+ * Assignment 5 - Task 2
+ * Middleware: allow only Employee or Admin
  **************************************** */
 Util.checkAccountType = (req, res, next) => {
-  if(!res.locals.accountData)
- {
-    return res.redirect("/account/login")
+  try {
+    // Ensure the JWT middleware ran and set res.locals.accountData
+    const acct = res.locals.accountData;
+    if (!acct) {
+      req.flash("notice", "Please log in to access that page.");
+      return res.redirect("/account/login");
     }
-  if (res.locals.accountData.account_type == "Employee" ||
-      res.locals.accountData.account_type == "Admin") 
-    {
-      next()
-    } 
-    else 
-    {
-      return res.redirect("/account/login")
-    }
-}
 
+    const acctType = (acct.account_type || "").toString();
+
+    // allow exactly Employee or Admin (case-insensitive)
+    if (acctType.toLowerCase() === "employee" || acctType.toLowerCase() === "admin") {
+      return next();
+    }
+
+    // unauthorized
+    console.warn(
+      `Authorization failure: account_id=${acct.account_id} account_type=${acct.account_type}`
+    );
+    req.flash("notice", "You are not authorized to view that page.");
+    return res.redirect("/account/login");
+  } catch (err) {
+    // unexpected error — forward to global error handler
+    next(err);
+  }
+};
 
 module.exports = Util 
